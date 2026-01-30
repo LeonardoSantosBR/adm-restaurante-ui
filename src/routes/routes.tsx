@@ -1,6 +1,6 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import Signin from "../pages/authentication/signin";
-import Signup from "../pages/authentication/signup";
+import Signin from "../pages/auth/signin";
+import Signup from "../pages/auth/signup";
 
 function RoutesOfApplication() {
   return (
