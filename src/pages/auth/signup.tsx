@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import AuthHeadMessage from "../../components/authentication/head-message";
-import LinkTo from "../../components/authentication/link-to";
+import AuthHeadMessage from "../../components/auth/head-message";
+import LinkTo from "../../components/auth/link-to";
 
 function Signup() {
   const navigate = useNavigate();
