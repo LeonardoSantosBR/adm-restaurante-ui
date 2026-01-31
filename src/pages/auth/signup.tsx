@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import AuthHeadMessage from "../../components/auth/head-message";
 import LinkTo from "../../components/auth/link-to";
 import { useCreateUsers } from "../../hooks/users/use-create-users";
-import { LoadingSpinner } from "../../components/loading/loading-spinner";
+import LoadingSpinner from "../../components/loading-spinner/loading-spinner";
 
 function Signup() {
   const navigate = useNavigate();
