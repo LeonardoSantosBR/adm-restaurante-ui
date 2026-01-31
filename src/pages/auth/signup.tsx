@@ -4,7 +4,8 @@ import AuthHeadMessage from "../../components/auth/head-message";
 import LinkTo from "../../components/auth/link-to";
 import { useCreateUsers } from "../../hooks/users/use-create-users";
 import LoadingSpinner from "../../components/loading-spinner/loading-spinner";
-import draggableAlert from "../../helpers/sweetalert/draggable";
+import Swal from "sweetalert2";
+import "sweetalert2/src/sweetalert2.scss";
 
 function Signup() {
   const navigate = useNavigate();
@@ -27,14 +28,23 @@ function Signup() {
       { name, email, password },
       {
         onSuccess: async () => {
-          await draggableAlert({
-            title: "Conta criada com sucesso!",
+          Swal.fire({
+            position: "top-end",
             icon: "success",
+            title: "Conta criada com sucesso!",
+            showConfirmButton: false,
+            timer: 1000,
           });
           navigate("/signin");
         },
         onError: () => {
-          draggableAlert({ title: "Algo deu errado!", icon: "error" });
+          Swal.fire({
+            position: "top-end",
+            icon: "error",
+            title: "Algo de errado na criação da conta..",
+            showConfirmButton: false,
+            timer: 1000,
+          });
         },
       }
     );

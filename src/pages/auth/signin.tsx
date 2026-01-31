@@ -2,11 +2,16 @@ import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthHeadMessage from "../../components/auth/head-message";
 import LinkTo from "../../components/auth/link-to";
+import { useSignin } from "../../hooks/auth/use-signin";
+import Swal from "sweetalert2";
+import "sweetalert2/src/sweetalert2.scss";
+import LoadingSpinner from "../../components/loading-spinner/loading-spinner";
 
 function Signin() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { mutate, isPending } = useSignin();
 
   const isValid = useMemo(() => {
     //memoriza dados(email,password) e evita que seja calculado cada vez que renderize.
@@ -18,8 +23,31 @@ function Signin() {
   function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault(); //intercepta comportamento padrão do navegador de recarregar a pagina após envio.
     if (!isValid) return;
-    //chamar api e setar token no localStorage
-    navigate("/signup");
+
+    mutate(
+      { email, password },
+      {
+        onSuccess: async () => {
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Login feito com sucesso!",
+            showConfirmButton: false,
+            timer: 1000,
+          });
+          navigate("/orders");
+        },
+        onError: () => {
+          Swal.fire({
+            position: "top-end",
+            icon: "error",
+            title: "Algo de errado no login..",
+            showConfirmButton: false,
+            timer: 1000,
+          });
+        },
+      }
+    );
   }
 
   return (
@@ -73,6 +101,7 @@ function Signin() {
           </form>
         </div>
       </div>
+      {isPending && <LoadingSpinner />}
     </div>
   );
 }
