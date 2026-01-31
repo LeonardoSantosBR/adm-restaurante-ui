@@ -6,6 +6,7 @@ import { useSignin } from "../../hooks/auth/use-signin";
 import Swal from "sweetalert2";
 import "sweetalert2/src/sweetalert2.scss";
 import LoadingSpinner from "../../components/loading-spinner/loading-spinner";
+import type { AxiosResponse } from "axios";
 
 function Signin() {
   const navigate = useNavigate();
@@ -27,7 +28,7 @@ function Signin() {
     mutate(
       { email, password },
       {
-        onSuccess: async () => {
+        onSuccess: async (body: AxiosResponse) => {
           Swal.fire({
             position: "top-end",
             icon: "success",
@@ -35,6 +36,7 @@ function Signin() {
             showConfirmButton: false,
             timer: 1000,
           });
+          localStorage.setItem("token", body.data.token);
           navigate("/orders");
         },
         onError: () => {
