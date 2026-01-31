@@ -4,6 +4,7 @@ import AuthHeadMessage from "../../components/auth/head-message";
 import LinkTo from "../../components/auth/link-to";
 import { useCreateUsers } from "../../hooks/users/use-create-users";
 import LoadingSpinner from "../../components/loading-spinner/loading-spinner";
+import draggableAlert from "../../helpers/sweetalert/draggable";
 
 function Signup() {
   const navigate = useNavigate();
@@ -25,11 +26,15 @@ function Signup() {
     mutate(
       { name, email, password },
       {
-        onSuccess: () => {
+        onSuccess: async () => {
+          await draggableAlert({
+            title: "Conta criada com sucesso!",
+            icon: "success",
+          });
           navigate("/signin");
         },
-        onError: (err) => {
-          console.log(err);
+        onError: () => {
+          draggableAlert({ title: "Algo deu errado!", icon: "error" });
         },
       }
     );
