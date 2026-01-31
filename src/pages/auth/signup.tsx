@@ -2,12 +2,15 @@ import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthHeadMessage from "../../components/auth/head-message";
 import LinkTo from "../../components/auth/link-to";
+import { useCreateUsers } from "../../hooks/users/use-create-users";
+import { LoadingSpinner } from "../../components/loading/loading-spinner";
 
 function Signup() {
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { mutate, isPending } = useCreateUsers();
 
   const isValid = useMemo(() => {
     //memoriza dados(email,password) e evita que seja calculado cada vez que renderize.
@@ -19,8 +22,17 @@ function Signup() {
 
   function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault(); //intercepta comportamento padrão do navegador de recarregar a pagina após envio.
-    //chamar api para cadastrar
-    navigate("/signin");
+    mutate(
+      { name, email, password },
+      {
+        onSuccess: () => {
+          navigate("/signin");
+        },
+        onError: (err) => {
+          console.log(err);
+        },
+      }
+    );
   }
 
   return (
@@ -84,6 +96,7 @@ function Signup() {
           </form>
         </div>
       </div>
+      {isPending && <LoadingSpinner />}
     </div>
   );
 }
