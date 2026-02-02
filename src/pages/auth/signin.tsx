@@ -1,11 +1,11 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthHeadMessage from "../../components/auth/head-message";
 import LinkTo from "../../components/auth/link-to";
 import { useSignin } from "../../hooks/auth/use-signin";
 import Swal from "sweetalert2";
 import "sweetalert2/src/sweetalert2.scss";
-import LoadingSpinner from "../../components/loading-spinner/loading-spinner";
+import { LoadingSpinner } from "../../components/loading-spinner/loading-spinner";
 import type { AxiosResponse } from "axios";
 
 function Signin() {
@@ -20,6 +20,11 @@ function Signin() {
     const passOk = password.trim().length >= 6;
     return emailOk && passOk;
   }, [email, password]);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) navigate("/orders");
+  }, []);
 
   function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault(); //intercepta comportamento padrão do navegador de recarregar a pagina após envio.
