@@ -16,9 +16,9 @@ export function updateOrders(
     description: string;
   }
 ) {
-  return api.patch(`/orders/${id}/`, data);
+  return api.patch(`/orders/${id}`, data);
 }
 
 export function deleteOrders(id: string) {
-  return api.delete(`/orders/${id}/`);
+  return api.delete(`/orders/${id}`);
 }

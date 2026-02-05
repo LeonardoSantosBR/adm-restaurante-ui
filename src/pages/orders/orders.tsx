@@ -20,7 +20,7 @@ function Orders() {
 
   useEffect(() => {
     queryClient.invalidateQueries({ queryKey: ["orders"] });
-  }, [pageSize]);
+  }, [pageSize, queryClient]);
 
   return (
     <div className="min-h-screen bg-[#DDDDDD]">
