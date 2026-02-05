@@ -98,7 +98,7 @@ function Signup() {
             </div>
 
             <div className="flex items-center justify-between pt-2">
-              <LinkTo text={"Criar conta"} component={"signin"} />
+              <LinkTo text={"Entrar"} component={"signin"} />
 
               <button
                 type="submit"
