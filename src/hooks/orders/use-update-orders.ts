@@ -5,8 +5,8 @@ export function useUpdateOrders() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (params: { id: string; title: string; description: string }) =>
-      updateOrders(params.id, { title: params.title, description: params.description }),
+    mutationFn: (params: { id: string; title: string; description: string, status: string }) =>
+      updateOrders(params.id, { title: params.title, description: params.description, status: params.status }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["orders"] });
     },

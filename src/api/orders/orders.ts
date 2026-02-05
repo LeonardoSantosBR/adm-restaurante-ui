@@ -14,9 +14,10 @@ export function updateOrders(
   data: {
     title: string;
     description: string;
+    status: string;
   }
 ) {
-  return api.patch(`/orders/${id}`, data);
+  return api.put(`/orders/${id}`, data);
 }
 
 export function deleteOrders(id: string) {
