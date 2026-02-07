@@ -8,10 +8,10 @@ export function createOrders(data: IcreateOrders) {
   });
 }
 
-export function getOrders(offset: number, pageSize: number) {
+export function getOrders(pageSize: number, token: string) {
   return api.get(`/orders`, {
     headers: { Authorization: `Bearer ${token}` },
-    params: { page: offset, limit: pageSize },
+    params: { limit: pageSize },
   });
 }
 

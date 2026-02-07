@@ -4,23 +4,19 @@ import { LoadingSpinner } from "../../components/loading-spinner/loading-spinner
 import { useGetOrders } from "../../hooks/orders/use-get-orders";
 import { CreateOrders } from "../../components/orders/create-orders";
 import { OrdersCard } from "../../components/orders/orders-card";
-import { Pagination } from "../../components/pagination/pagination";
 import type { OrdersProps } from "../../types/orders/Tcreate-orders-payload";
 import { useQueryClient } from "@tanstack/react-query";
 
 function Orders() {
   const queryClient = useQueryClient();
-  const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(3);
-  const offset = (page - 1) * pageSize || 1;
+  const token = localStorage.getItem("token");
 
-  const { data: orders, isLoading } = useGetOrders(offset, pageSize);
-  const postsList = orders?.results ?? [];
-  const totalPages = orders?.count ? Math.ceil(orders.count / pageSize) : 1;
+  const { data: orders, isLoading } = useGetOrders(pageSize, token, {enabled: !!token});
 
   useEffect(() => {
     queryClient.invalidateQueries({ queryKey: ["orders"] });
-  }, [pageSize, queryClient]);
+  }, [token, pageSize, queryClient]);
 
   return (
     <div className="min-h-screen bg-[#DDDDDD]">
@@ -39,13 +35,6 @@ function Orders() {
           ))}
 
         <div className="flex justify-center items-center mt-2 gap-2">
-          <Pagination
-            page={page}
-            totalPages={totalPages}
-            hasNext={Boolean(postsList?.next)}
-            hasPrev={Boolean(postsList?.previous)}
-            onChange={setPage}
-          />
           <select
             value={pageSize}
             onChange={(e) => setPageSize(Number(e.target.value))}
@@ -57,7 +46,7 @@ function Orders() {
             <option value={15}>15</option>
           </select>
         </div>
-        {isLoading && <LoadingSpinner />}
+        {isLoading || !token && <LoadingSpinner />}
       </main>
     </div>
   );
