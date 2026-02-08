@@ -1,4 +1,4 @@
-# Restaurante UI
+# Administrador do restaurante UI
 *Projeto de signin/signup de atendentes para criação e atualização de pedidos.*
 
 ### Login
@@ -12,3 +12,4 @@
 
 ### Edit order
 <img width="1048" height="610" alt="Image" src="https://github.com/user-attachments/assets/83f10de3-5dfb-436c-9499-71bf52d641e7" />
+
